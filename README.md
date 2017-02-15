@@ -34,18 +34,15 @@ I trained a SVM with linear kernel using the SVC implementation in scikit learn 
 ## Sliding-window technique
 ###Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
-
 To detect car in our image, I've used a sliding window technique as described in the lessons. The code can be found in the 6th code block of the notebook 'Vehicle tracking pipeline'. 
 
 My final model uses a window size of 64x64 and the model only searches the bottom of the image. We only use x-values between 375 and 675, because the top only represents the sky and some background and the bottom the front of the car. 
 
-The final paramters are chosen based on emperical results with brute force techniques. Values between 16 and 64 have been tried for the window size. For the overlap we decided to go for 0.6 for the same reason (experimented with values between 0.5 x 0.8). The higher the overlap the more compute expensive the algorithms is. For example, 231 windows for an overlap of 0.5 and 1800 windows for an overlap of 0.8.
+The final paramters are chosen based on emperical results (image and video results) with brute force techniques. Values between 16 and 64 have been tried for the window size. For the overlap we decided to go for 0.6 for the same reason (experimented with values between 0.5 x 0.8). The higher the overlap the more compute expensive the algorithms is. For example, 231 windows for an overlap of 0.5 and 1800 windows for an overlap of 0.8.
 
 These images captured by the sliding windows function are resized before feeding into the classifier.
 
-####Some discussion is given around how you improved the reliability of the classifier i.e., fewer false positives and more reliable car detections (this could be things like choice of feature vector, thresholding the decision function, hard negative mining etc.)
+To keep track of the results, I've plotted the results on the test image after each iteration (see images below). Playing around with the hyperparamters and a custom threshold for the heatmap, I've visually detected improvements on the test images. When happy with the (intermediary) results, the results were also visually tested on the video.
 
 ![Heatmap and vehicle detection example 1](/images/heatmap_detection_example1.png)
 ![Heatmap and vehicle detection example 2](/images/heatmap_detection_example2.png)
@@ -53,17 +50,13 @@ These images captured by the sliding windows function are resized before feeding
 
 
 
-
 ## Video pipeline
-####A method, such as requiring that a detection be found at or near the same position in several subsequent frames, (could be a heat map showing the location of repeat detections) is implemented as a means of rejecting false positives, and this demonstrably reduces the number of false positives. Same or similar method used to draw bounding boxes (or circles, cubes, etc.) around high-confidence detections where multiple overlapping detections occur.
+To make my algorithm more robust for videos I've added some techniques to detect vehicles in subsequent frames. A heatmap (the code can be found in the 9th and 11th code block of the notebook 'Vehicle tracking pipeline' in the functions get_hot_windows and detect_vehicles respectively) is added to show the location of repeated vehicle detections. The previous results are stored in a custom class Memory, that stores values of the previous frame. This is used to reduce the number of false positives. 
 
-
-To make my algorithm more robust for videos I've added some techniques to detect vehicles in subsequent frames. A heatmap is added to show the location of repeated vehicle detections. This is used to reduce the number of false positives. 
-
+To combine multiple overlapping boundig boxes I've added a function (draw_labeled_bboxes, found in the 11th code block) that combines all bounding boxes. The overlapping bounding boxes are extended to the min and max values so that a bigger bounding box is created.
 
 ## Output video
-
-The output video can be downloaded from [here](output_video.mp4).
+To process the video, I've created a function process_image. The output video can be downloaded from [here](output_video.mp4).
 
 ## Discussion
 To improve the classifier:
@@ -78,5 +71,5 @@ To reduce the number of false postives:
 * Hard negative mining
 
 To improve the vehicle detection:
-* Use (end-to-end) deep learning approach (SDD, YOLO, etc)
+* Use (end-to-end) deep learning approach (SSD, YOLO, etc)
 * Dynamically change the size of the sliding window function (the highter in the image the smaller the window, because the cars are further away)
