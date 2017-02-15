@@ -37,23 +37,18 @@ I trained a SVM with linear kernel using the SVC implementation in scikit learn 
 ###Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-To detect car in our image, I've used a sliding window technique.
+To detect car in our image, I've used a sliding window technique. The code can be found in the function ...
+
+My final model uses a window size of .x. and the model only searches the bottom of the image. We only use x-values between . and ., because the top only represents the sky and some background and the bottom the front of the car. 
+The final paramters are chosen based on emperical results with brute force techniques. Values between . and . are tried for the window size. For the overlap we decided to go for . for the same reason (tried between . x .). The higher the overlap the more compute expensive the algorithms is. For example, x windows for x and x windows for x.
 
 ![alt text][image3]
 
-####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
-
-The HOG feature extractor is computational expensive, so I've decided to limit the search space. For example, the top .. pixels of the image useally don't contain any cars (mostly sky and background). Also, the bottom x pixels show the front of the car so we can exclude that part as well. 
-
-For my sliding window I've used a window size of x with an overlap of 80%. 
-
-These images are resized and passed to the HOG features extractor before feeding into the classifier.
+These images are resized before feeding into the classifier.
 
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
-
-![alt text][image4]
 
 ####Some discussion is given around how you improved the reliability of the classifier i.e., fewer false positives and more reliable car detections (this could be things like choice of feature vector, thresholding the decision function, hard negative mining etc.)
 
@@ -62,13 +57,21 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 ![Heatmap and vehicle detection example 3](/images/heatmap_detection_example3.png)
 
 
-## Video pipeline
 
+
+## Video pipeline
+####A method, such as requiring that a detection be found at or near the same position in several subsequent frames, (could be a heat map showing the location of repeat detections) is implemented as a means of rejecting false positives, and this demonstrably reduces the number of false positives. Same or similar method used to draw bounding boxes (or circles, cubes, etc.) around high-confidence detections where multiple overlapping detections occur.
+
+
+To make my algorithm more robust for videos I've added some techniques to detect vehicles in subsequent frames. A heatmap is added to show the location of repeated vehicle detecteions. This is used to reduce the number of false positives. 
 
 
 ## Output video
 
 
+The output video can be downloaded from [here](output_video.mp4).
 
 ## Discussion
-
+To improve the classifier:
+* Try other algorithms
+* Fine tune parameters
