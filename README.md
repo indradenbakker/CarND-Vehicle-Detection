@@ -15,14 +15,15 @@ The code for this step is contained in the first code cell of the IPython notebo
 
 I started by reading in all the `vehicle` and `non-vehicle` images that were shared as part of this project. Below an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![Example training images][/images/training_data_vehicle.png]
+![Example training images](./images/training_data_vehicle.png)
 
 When loading the images using matplotlib.image the image will automatically be normalized. I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`). Below an image from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
-![vehicle example][/images/hog_features_vehicle.png]
-![no vehicle example][/images/hog_features_no_vehicle.png]
+![vehicle example](./images/hog_features_vehicle.png)
+
+![no vehicle example](./images/hog_features_no_vehicle.png)
 
 The final paramters are based on emperical results. I've tried multiple combinations, see a subset of the results in the table below. The colour channels tested include RGB, HSL, HSV, YUV, and YCrCB.
 
@@ -56,9 +57,9 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 ####Some discussion is given around how you improved the reliability of the classifier i.e., fewer false positives and more reliable car detections (this could be things like choice of feature vector, thresholding the decision function, hard negative mining etc.)
 
-![Heatmap and vehicle detection example 1][/images/heatmap_detection_example1.png]
-![Heatmap and vehicle detection example 2][/images/heatmap_detection_example2.png]
-![Heatmap and vehicle detection example 3][/images/heatmap_detection_example3.png]
+![Heatmap and vehicle detection example 1](/images/heatmap_detection_example1.png)
+![Heatmap and vehicle detection example 2](/images/heatmap_detection_example2.png)
+![Heatmap and vehicle detection example 3](/images/heatmap_detection_example3.png)
 
 
 ## Video pipeline
