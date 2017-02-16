@@ -11,8 +11,6 @@ In this project I've described the steps to detect vehicles in a video. The step
 * Estimate a bounding box for vehicles detected.
 
 ## Histogram of Oriented Gradients (HOG) feature extraction
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
-
 I started by reading in all the `vehicle` and `non-vehicle` images that were shared as part of this project. Below an example of one of each of the `non-vehicle` and `vehicle` classes:
 
 ![Example training images](./images/training_data_vehicle.png)
